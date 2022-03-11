@@ -1,9 +1,14 @@
 .form {
     position: relative;
+    justify-content: center;
+    align-items: center;
+    display: block;
 }
 
 .control {
     margin-bottom: 0.5rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .control label {

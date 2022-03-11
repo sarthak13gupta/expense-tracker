@@ -1,62 +1,81 @@
 import classes from "./SignIn.module.css";
 import Card from "../Components/UI/Card";
-import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { logInWithEmailAndPassword, signInWithGoogle } from "../authentication";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 const SignIn = () => {
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState("");
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
-  
+  const navigate = useNavigate();
 
-  const emailInputHandler = (event) => {
-    setEnteredEmail(event.target.value);
-    // console.log(enteredEmail);
-  };
+  const [user, loading, error] = useAuthState(auth);
 
-  const passwordInputHandler = (event) => {
-    setEnteredPassword(event.target.value);
-    // console.log(enteredPassword);
-  };
+  useEffect(() => {
+    if (loading) {
+      //loading spinner
+      return;
+    }
 
-  const formSubmitHandler = (event) => {
+    if (user) navigate("/home");
+  },[user, loading]);
+
+  const emailPasswordLogin = (event) => {
     event.preventDefault();
+
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    logInWithEmailAndPassword(enteredEmail, enteredPassword);
 
     console.log(enteredEmail, enteredPassword);
   };
 
+  const googleSignIn = () => {
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    signInWithGoogle(enteredEmail, enteredPassword);
+  };
+
   return (
     <Card>
-      <form onSubmit={formSubmitHandler} className={classes.form}>
+      <form className={classes.form}>
         <div>
           <div className={classes.control}>
             <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              onChange={emailInputHandler}
-              value={enteredEmail}
-            />
+            <input type="text" id="email" ref={emailInputRef} required />
           </div>
           <div className={classes.control}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
-              onChange={passwordInputHandler}
-              value={enteredPassword}
+              ref={passwordInputRef}
+              required
             />
           </div>
           <div className={classes.actions}>
-            <button >SignIn</button>
+            <button onClick={emailPasswordLogin}>SignIn</button>
           </div>
-          <div className={classes.actions}>
-            <Link to="/signup" >Signup</Link>
+          <button onClick={googleSignIn}>Login With Google</button>
+
+          <div>
+            <Link to="/signin/reset">Forgot Password</Link>
+          </div>
+          <div>
+            Don't have an account? <Link to="/register">Register</Link> now.
           </div>
         </div>
       </form>
     </Card>
   );
 };
+
 
 export default SignIn;

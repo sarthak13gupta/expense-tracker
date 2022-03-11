@@ -1,6 +1,11 @@
+import { Fragment } from "react";
+
+import Header from "../Components/Header";
 const Explore = () => {
   return (
-    <div>
+    <Fragment>
+      <Header/>
+      <div>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate cum
         eum dolorem accusamus sunt tenetur totam laudantium sit nobis adipisci
@@ -22,6 +27,8 @@ const Explore = () => {
         illum vero ipsa dignissimos ullam numquam esse, nesciunt est saepe.
       </p>
     </div>
+    </Fragment>
+    
   );
 };
 
