@@ -5,6 +5,8 @@ import { registerWithEmailAndPassword  , signInWithGoogle} from "../authenticati
 import Card from "../Components/UI/Card";
 import classes from "./SignUp.module.css";
 import {auth} from "../firebase";
+import { useDispatch } from "react-redux";
+import { userActions } from "../store/user";
 
 const SignUp = () => {
   const nameInputRef = useRef();
@@ -12,6 +14,7 @@ const SignUp = () => {
   const passwordInputRef = useRef();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -32,6 +35,8 @@ const SignUp = () => {
     const enteredPassword = passwordInputRef.current.value;
 
     console.log(enteredEmail, enteredPassword, enteredName);
+    dispatch(userActions.addUserName(enteredName));
+
 
     registerWithEmailAndPassword(enteredName, enteredEmail, enteredPassword);
   };

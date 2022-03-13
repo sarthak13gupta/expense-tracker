@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { expenseActions } from "../../store/expenses";
+import { groupActions } from "../../store/group";
 import NewExpense from "../NewExpense/NewExpense";
 import Card from "../UI/Card";
-import classes from "./TopFold.module.css";
+import classes from "./topFoldGroups.module.css";
 
 const TopFold = () => {
     
@@ -11,10 +11,11 @@ const TopFold = () => {
 
     const dispatch = useDispatch();
     let showForm = false;
-    showForm = useSelector(state => state.expense.showForm)
-    const formShowHandler = () => {
+    showForm = useSelector(state => state.group.showForm)
 
-        dispatch(expenseActions.addExpenseFormToggle())
+
+    const formShowHandler = () => {
+        dispatch(groupActions.addGroupFormToggle())
     }
 
 
@@ -23,7 +24,7 @@ const TopFold = () => {
             <div className={classes.topFold}>
                 <i></i>
                 <div className={classes.space}>
-                    <input type="text" placeholder="search for expenses" ref={queryRef} />
+                    <input type="text" placeholder="search for group" ref={queryRef} />
                     <button onClick={formShowHandler}>Add</button>
                 </div>
             </div>

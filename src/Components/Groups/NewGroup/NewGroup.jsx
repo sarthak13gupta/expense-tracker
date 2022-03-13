@@ -1,17 +1,17 @@
 import { addDoc , collection , Timestamp , query , getDocs } from "firebase/firestore/lite";
 import {  useRef , useEffect} from "react";
-import Card from "../UI/Card";
-import classes from "./NewExpense.module.css";
+import Card from "../../UI/Card";
+import classes from "./NewGroup.module.css";
 import db from "../../firebase";
 import { useDispatch } from "react-redux";
-import { expenseActions } from "../../store/expenses";
+import { groupActions } from "../../../store/group";
 
 
 const NewExpense = () => {
 
 
   let descriptionInputRef = useRef();
-  let costInputRef = useRef();
+  let memberInputRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const NewExpense = () => {
     const enteredCost = costInputRef.current.value;
 
     if(enteredCost && enteredDescription)
-    dispatch(expenseActions.addExpenseFormToggle());
+    dispatch(groupActions.addExpenseFormToggle());
     else
     {
       alert("please completely add an expense");

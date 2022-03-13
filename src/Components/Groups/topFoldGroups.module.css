@@ -1,0 +1,21 @@
+.topfold {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 12px;
+    padding: 12px 0px;
+    align-items: center;
+}
+
+.space {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.topfold input {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    background-color: white;
+    border-radius: 12px;
+}

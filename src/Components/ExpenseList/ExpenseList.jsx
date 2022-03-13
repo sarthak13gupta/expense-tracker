@@ -3,44 +3,29 @@ import { collection , query , orderBy , getDocs } from "firebase/firestore/lite"
 import{  onSnapshot} from "firebase/firestore"
 import db from "../../firebase";
 import ExpenseItem from "../ExpenseItem/ExpenseItem";
+import { useDispatch } from "react-redux";
+import { expenseActions } from "../../store/expenses";
 
 const ExpenseList = () => {
 
-    const [expenseList , setExpenseList] = useState([]);
+    const dispatch = useDispatch();
 
+    let expenseList = [];
     useEffect(()=>{
        const collectionRef = collection(db , "expenses");
-    //     const q = query(collection(db , "expenses") ,  orderBy('created' , 'desc'));
-    //     console.log(q);
-    //     // onSnapshot(q , (querySnap) => {
-    //     // setExpenseList(querySnap.docs.map(doc => ({
-    //     //     id: doc.id,
-    //     //     data: doc.data(),
-    //     // })))
-    // // });
 
-    getDocs(collectionRef).then((snapshot) => {
+        getDocs(collectionRef).then((snapshot) => {
         snapshot.docs.map((doc) => {
-            expenseList.push({...doc.data() , id: doc.id});
+            dispatch(expenseActions.addExpense(doc.data()))
+            // expenseList.push({...doc.data() , id: doc.id});
         });
-
     })
-    console.log(expenseList);
     },[db]);
 
 
-    return (
 
-        // <div>expenseList</div>
-        <ul>
-            {expenseList.map((expense) => (
-                <ExpenseItem  
-                key = {expense.id}         
-                description = {expense.description}
-                cost = {expense.cost}              
-            />
-            ))}
-        </ul>
+    return (
+        <ExpenseItem/>
     )
 };
-export default ExpenseList;
+// export default ExpenseList; 
