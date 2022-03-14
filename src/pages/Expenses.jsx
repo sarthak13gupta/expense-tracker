@@ -1,20 +1,14 @@
-import { Fragment, useState } from "react";
+import {  useState } from "react";
 import ExpenseItem from "../Components/ExpenseItem/ExpenseItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
   collection,
   getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
 } from "firebase/firestore/lite";
 import db from "../firebase";
 import { useEffect } from "react";
 import { expenseActions } from "../store/expenses";
-import { userActions } from "../store/user";
-import Card from "../Components/UI/Card";
-import UpdateExpense from "../Components/ExpenseItem/UpdateExpense";
-import DeleteExpense from "../Components/ExpenseItem/DeleteExpense";
+import classes from "./Expenses.module.css";
 
 const Expenses = () => {
   const dispatch = useDispatch();
@@ -49,21 +43,25 @@ const Expenses = () => {
   console.log(expenseList);
 
   return (
-    <Fragment>
+    <div className={classes.container}>
       Individual Expenses
+      <div className={classes.content}>
       {expenseList &&
         expenseList.map((expense) => {
           dispatch(expenseActions.setId(expense.id));
           console.log(expense);
           return (
-            <Card key={expense.id}>
-              <p>{expense.description}</p>
-              <UpdateExpense id={expense.id} />
-              <DeleteExpense id={expense.id}>Delete</DeleteExpense>
-            </Card>
-          );
-        })}
-    </Fragment>
+            
+            <ExpenseItem key={expense.id} description = {expense.description} cost = {expense.cost}></ExpenseItem>
+              
+              // <UpdateExpense id={expense.id} />
+              // <DeleteExpense id={expense.id}>Delete</DeleteExpense>
+           
+          )
+          })}
+      </div>
+      
+    </div>
   );
 };
 

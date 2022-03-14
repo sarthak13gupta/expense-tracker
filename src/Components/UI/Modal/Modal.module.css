@@ -1,0 +1,87 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.modal {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 10px;
+    /* text-align: center; */
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px, rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+}
+
+
+/* .modal button {
+    color: #444;
+    border-color: #444;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.modal p {
+    color: #444;
+    font-weight: bold;
+} */
+
+.form {
+    position: relative;
+    display: block;
+}
+
+.control {
+    margin-bottom: 0.5rem;
+    left: 0;
+}
+
+.control label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    left: 0;
+}
+
+.control input,
+.control textarea {
+    font: inherit;
+    padding: 0.35rem;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    border: 1px solid #c1d1d1;
+    display: block;
+    /* width: 100%; */
+    position: relative;
+    font-size: 1.25rem;
+    align-items: center;
+}
+
+.control input:focus,
+.control textarea:focus {
+    background-color: #cbf8f8;
+    outline-color: teal;
+}
+
+.actions {
+    text-align: center;
+    margin: 5px;
+}
+
+.actions button {
+    font-size: 1.25rem;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.actions button:hover {
+    background-color: #cbf8f8;
+    border-color: teal;
+    transform: scale(1.05);
+}

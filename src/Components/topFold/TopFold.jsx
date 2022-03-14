@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { expenseActions } from "../../store/expenses";
-import NewExpense from "../NewExpense/NewExpense";
+import { uiActions } from "../../store/ui";
 import Card from "../UI/Card";
 import classes from "./TopFold.module.css";
 
@@ -14,7 +13,7 @@ const TopFold = () => {
     showForm = useSelector(state => state.expense.showForm)
     const formShowHandler = () => {
 
-        dispatch(expenseActions.addExpenseFormToggle())
+        dispatch(uiActions.setShowModal())
     }
 
 
@@ -27,7 +26,7 @@ const TopFold = () => {
                     <button onClick={formShowHandler}>Add</button>
                 </div>
             </div>
-            {showForm &&<NewExpense/>}
+            {/* {showForm &&<NewExpense/>} */}
         </Card>
     )
 

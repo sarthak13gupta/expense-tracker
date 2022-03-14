@@ -3,17 +3,16 @@ import { Link } from "react-router-dom";
 import Card from "../UI/Card";
 import ExpenseList from "../ExpenseList/ExpenseList";
 import { Fragment } from "react";
+import classes from "./ExpenseItem.module.css";
+
 const ExpenseItem = (props) => {
  
 
   return (
-    
-    <li>
-      <Card>
-      <h3>{props.description}</h3>
-      <p>{props.cost}</p>
-      </Card>
-    </li>
+          <div className={classes.wrap}>
+            <h1>{props.cost}</h1>
+            <h5>{props.description}</h5>
+          </div>
   );
 };
 
