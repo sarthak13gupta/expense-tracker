@@ -1,19 +1,21 @@
-import {  useState } from "react";
+import {  Fragment, useState } from "react";
 import ExpenseItem from "../Components/ExpenseItem/ExpenseItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
   collection,
   getDocs,
+  doc
 } from "firebase/firestore/lite";
 import db from "../firebase";
 import { useEffect } from "react";
 import { expenseActions } from "../store/expenses";
 import classes from "./Expenses.module.css";
 
+
 const Expenses = () => {
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.user.userName);
+  // const userName = useSelector((state) => state.user.userName);
 
   const [expenseList, setExpenseList] = useState([]);
 
@@ -32,7 +34,7 @@ const Expenses = () => {
             id: doc.id,
           });
         });
-
+        dispatch(expenseActions.setId(doc.id));
         setExpenseList(tempArray);
       })
       .catch((err) => console.log(err.message));
@@ -52,8 +54,10 @@ const Expenses = () => {
           console.log(expense);
           return (
             
-            <ExpenseItem key={expense.id} description = {expense.description} cost = {expense.cost}></ExpenseItem>
-              
+            <Fragment>
+              <ExpenseItem key={expense.id} description = {expense.description} cost = {expense.cost}></ExpenseItem>
+
+            </Fragment>
               // <UpdateExpense id={expense.id} />
               // <DeleteExpense id={expense.id}>Delete</DeleteExpense>
            

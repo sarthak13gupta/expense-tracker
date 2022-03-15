@@ -3,76 +3,51 @@ import { updateDoc } from "firebase/firestore/lite";
 import db from "../../firebase";
 import { Fragment, useRef, useState } from "react";
 import Card from "../UI/Card";
-import classes from "./UpdateExpense.module.css";
+import classes from "./ExpenseItem.module.css";
+import {FiEdit2} from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "../../store/ui";
+
+
 
 const UpdateExpense = (props) => {
   let toggleUpdate = false;
 
-  const updateCostInputRef = useRef();
-  const updateDescriptionInputRef = useRef();
+  // const updateCostInputRef = useRef();
+  // const updateDescriptionInputRef = useRef();
 
-  const UpdateFormHandler = () => {
-   toggleUpdate = !toggleUpdate;
+  const dispatch = useDispatch();
 
+  const updatedDescription = useSelector(state => state.expense.description);
+  const updatedCost = useSelector(state => state.expense.cost);
 
-   console.log(toggleUpdate , props.id);
-  }
-
-  const updateExpenseHandler = async (event) => {
+  const updateExpenseHandler = (event) => {
     event.preventDefault();
-    // UpdateFormHandler();
 
-    const updatedCost = updateCostInputRef.current.value;
-    const updatedDescription = updateDescriptionInputRef.current.value;
+    dispatch(uiActions.setUpdateModal());
 
-    const docRef = doc(db, "expenses", props.id);
+    // const updatedCost = updateCostInputRef.current.value;
+    // const updatedDescription = updateDescriptionInputRef.current.value;
 
-    try {
-      await updateDoc(docRef, {
-        cost: updatedCost,
-        description: updatedDescription,
-      });
-    } catch (err) {
-      alert(err);
-    }
+    
+
+    // const docRef = doc(db, "expenses", id);
+
+    // try {
+    //   await updateDoc(docRef, {
+    //     cost: updatedCost,
+    //     description: updatedDescription,
+    //   });
+    // } catch (err) {
+    //   alert(err);
+    // }
   };
 
  
 
   return (
     <Fragment>
-      {!toggleUpdate && <button onClick={UpdateFormHandler}>Update</button>}
-      {toggleUpdate && (
-        // <Card>
-            
-          <div>
-            Update Expense
-            <form className={classes.form}>
-              <div className={classes.control}>
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  id="description"
-                  ref={updateDescriptionInputRef}
-                  required
-                />
-              </div>
-              <div className={classes.control}>
-                <label htmlFor="cost">Cost</label>
-                <input
-                  type="text"
-                  id="description"
-                  ref={updateCostInputRef}
-                  required
-                />
-              </div>
-              <div className={classes.actions}>
-                <button onClick={updateExpenseHandler}>AddExpense</button>
-              </div>
-            </form>
-          </div>
-        // </Card>
-      )}
+      <FiEdit2 className={classes.icon} onClick={updateExpenseHandler}/>
     </Fragment>
   );
 };

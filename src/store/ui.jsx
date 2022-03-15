@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialUiState = {
     showModal: false,
+    showUpdateModal: false
 }
 
 const uiSlice = createSlice({
@@ -11,6 +12,10 @@ const uiSlice = createSlice({
         setShowModal(state){
             state.showModal = !state.showModal;
         },
+        setUpdateModal(state){
+            state.showUpdateModal = !state.showUpdateModal;
+        },
+
     }
 });
 

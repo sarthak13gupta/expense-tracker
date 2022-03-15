@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import classes from "./Modal.module.css";
+import classes from "./UpdateExpenseModal.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { uiActions } from "../../../store/ui";
-import { expenseActions } from "../../../store/expenses";
-import { collection, doc, addDoc, Timestamp } from "firebase/firestore/lite";
-import db from "../../../firebase";
+import { uiActions } from "../../store/ui";
+import { expenseActions } from "../../store/expenses";
+import {  doc , updateDoc } from "firebase/firestore/lite";
+import db from "../../firebase";
 
 
 const backdrop = {
@@ -14,9 +14,9 @@ const backdrop = {
   hidden: { opacity: 0 },
 };
 
-const Modal = () => {
+const UpdateExpenseModal = () => {
   const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.ui.showModal);
+  const showUpdateModal = useSelector((state) => state.ui.showUpdateModal);
 
   const modal = {
     hidden: {
@@ -32,38 +32,40 @@ const Modal = () => {
 
   let descriptionInputRef = useRef();
   let costInputRef = useRef();
+  const id = useSelector(state => state.expense.id);
 
-  const addExpenseHandler = async (event) => {
+  const updateExpenseHandler = async (event) => {
     event.preventDefault();
 
-    const enteredDescription = descriptionInputRef.current.value;
-    const enteredCost = costInputRef.current.value;
+    const updatedDescription = descriptionInputRef.current.value;
+    const updatedCost = costInputRef.current.value;
 
-    if (enteredCost && enteredDescription) {
-      dispatch(expenseActions.addDescription(enteredDescription));
-      dispatch(expenseActions.addCost(enteredCost));
-      dispatch(uiActions.setShowModal());
+    if (updatedCost && updatedDescription) {
+      dispatch(expenseActions.addDescription(updatedDescription));
+      dispatch(expenseActions.addCost(updatedCost));
+      dispatch(uiActions.setUpdateModal());
+        
+        
+      const docRef = doc(db, "expenses", id);
 
-      try {
-        const collectionRef = collection(db, "expenses");
-        addDoc(collectionRef, {
-          description: enteredDescription,
-          cost: enteredCost,
-          created: Timestamp.now(),
-        });
-      } catch (err) {
-        alert(err.message);
-      }
+    try {
+      await updateDoc(docRef, {
+        cost: updatedCost,
+        description: updatedDescription,
+      });
+    } catch (err) {
+      alert(err);
+    }
     } else {
       alert("please completely add an expense");
     }
-    console.log(enteredCost, enteredDescription);
+    console.log(updatedCost, updatedDescription);
     descriptionInputRef = "";
     costInputRef = "";
   };
 
   const removeModalHandler = () => {
-    dispatch(uiActions.setShowModal());
+    dispatch(uiActions.setUpdateModal());
   };
 
   //   useEffect(() => {
@@ -75,7 +77,7 @@ const Modal = () => {
   return (
     // <div className={classes.container}>
     <AnimatePresence exitBeforeEnter>
-      {showModal && (
+      {showUpdateModal && (
         <motion.div
           className={classes.backdrop}
           variants={backdrop}
@@ -90,7 +92,7 @@ const Modal = () => {
             animate="visible"
           >
             <div>
-              <h1>Add new Expense</h1>
+              <h1>Update Expense</h1>
               <form className={classes.form}>
                 <div className={classes.control}>
                   <label htmlFor="description">Description</label>
@@ -111,7 +113,7 @@ const Modal = () => {
                   />
                 </div>
                 <div className={classes.actions}>
-                  <button onClick={addExpenseHandler}>AddExpense</button>
+                  <button onClick={updateExpenseHandler}>UpdateExpense</button>
                   <button onClick={removeModalHandler}>Cancel</button>
                 </div>
               </form>
@@ -125,4 +127,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default UpdateExpenseModal;

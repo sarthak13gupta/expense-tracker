@@ -48,8 +48,22 @@
         top: 50%;
     }
     
+    .wrap div {
+        align-items: flex-end;
+    }
+    
     .wrap:hover {
         box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px, rgb(0 0 0 / 72%) 0px 30px 22px -10px;
         transform: scale(1.05);
         border-color: rgba(249, 249, 249, 0.8);
+    }
+    
+    .icon {
+        top: 0;
+        box-shadow: inset;
+        padding-right: 10px;
+    }
+    
+    .icon:hover {
+        transform: scale(2.0);
     }

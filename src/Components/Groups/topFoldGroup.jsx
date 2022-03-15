@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../../store/group";
-import NewExpense from "../NewExpense/NewExpense";
+// import NewExpense from "../NewExpense/NewExpense";
 import Card from "../UI/Card";
 import classes from "./topFoldGroups.module.css";
 
@@ -28,7 +28,7 @@ const TopFold = () => {
                     <button onClick={formShowHandler}>Add</button>
                 </div>
             </div>
-            {showForm &&<NewExpense/>}
+            {/* {showForm &&<NewExpense/>} */}
         </Card>
     )
 

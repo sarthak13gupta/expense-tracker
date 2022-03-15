@@ -25,9 +25,9 @@ const expenseSlice = createSlice({
       state.id = action.payload;
     },
 
-    addExpenseFormToggle(state) {
-      state.showForm = !state.showForm;
-    },
+    // addExpenseFormToggle(state) {
+    //   state.showForm = !state.showForm;
+    // },
     updateExpenseFormToggle(state) {
       state.updateForm = !state.updateForm;
     },
@@ -40,19 +40,18 @@ const expenseSlice = createSlice({
       state.enteredCost = action.payload;
     },
 
-    addExpense(state , actions){
-
-      try {
-        const collectionRef = collection(db , "expenses");
-         addDoc(collectionRef , {
-            description: state.enteredDescription,
-            cost: state.enteredCost,
-            created: Timestamp.now(),
-        })
-    }catch(err){
-        alert(err.message);
-    }
-    },
+    // addExpense(state , actions){
+    // //   try {
+    // //     const collectionRef = collection(db , "expenses");
+    // //      addDoc(collectionRef , {
+    // //         description: state.enteredDescription,
+    // //         cost: state.enteredCost,
+    // //         created: Timestamp.now(),
+    // //     })
+    // // }catch(err){
+    // //     alert(err.message);
+    // // }
+    // },
 
     deleteExpense(state) {
       const expenseDocRef = doc(db, "expenses", state.id);
