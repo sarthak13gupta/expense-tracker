@@ -14,9 +14,9 @@ const backdrop = {
   hidden: { opacity: 0 },
 };
 
-const Modal = () => {
+const GroupModal = () => {
   const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.ui.showModal);
+  const showModal = useSelector((state) => state.ui.showGroupModal);
 
   const modal = {
     hidden: {
@@ -31,24 +31,24 @@ const Modal = () => {
   };
 
   let descriptionInputRef = useRef();
-  let costInputRef = useRef();
+  let memberInputRef = useRef();
 
-  const addExpenseHandler = async (event) => {
+  const addGroupHandler = async (event) => {
     event.preventDefault();
 
     const enteredDescription = descriptionInputRef.current.value;
-    const enteredCost = costInputRef.current.value;
+    const enteredMembers = memberInputRef.current.value;
 
-    if (enteredCost && enteredDescription) {
+    if (enteredMembers && enteredDescription) {
       dispatch(expenseActions.addDescription(enteredDescription));
-      dispatch(expenseActions.addCost(enteredCost));
-      dispatch(uiActions.setShowModal());
+      dispatch(expenseActions.addCost(enteredMembers));
+      dispatch(uiActions.setGroupShowModal());
 
       try {
-        const collectionRef = collection(db, "expenses");
-        await addDoc(collectionRef, {
+        const collectionRef = collection(db, "group");
+        addDoc(collectionRef, {
           description: enteredDescription,
-          cost: enteredCost,
+          members: enteredMembers,
           created: Timestamp.now(),
         });
       } catch (err) {
@@ -57,21 +57,16 @@ const Modal = () => {
     } else {
       alert("please completely add an expense");
     }
-    console.log(enteredCost, enteredDescription);
+    console.log(enteredMembers, enteredDescription);
     descriptionInputRef = "";
-    costInputRef = "";
+    memberInputRef = "";
   };
 
-  const removeModalHandler = () => {
-    dispatch(uiActions.setShowModal());
+  const removeGroupModalHandler = () => {
+    dispatch(uiActions.setGroupShowModal());
   };
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       dispatch(uiActions.setShowModal());
-  //     }, 1000);
-  //   }, []);
-
+  
   return (
     // <div className={classes.container}>
     <AnimatePresence exitBeforeEnter>
@@ -90,7 +85,7 @@ const Modal = () => {
             animate="visible"
           >
             <div>
-              <h1>Add new Expense</h1>
+              <h1>Add new Group</h1>
               <form className={classes.form}>
                 <div className={classes.control}>
                   <label htmlFor="description">Description</label>
@@ -102,17 +97,17 @@ const Modal = () => {
                   />
                 </div>
                 <div className={classes.control}>
-                  <label htmlFor="cost">Cost</label>
+                  <label htmlFor="cost">Members</label>
                   <input
                     type="text"
                     id="description"
-                    ref={costInputRef}
+                    ref={memberInputRef}
                     // required
                   />
                 </div>
                 <div className={classes.actions}>
-                  <button onClick={addExpenseHandler}>AddExpense</button>
-                  <button onClick={removeModalHandler}>Cancel</button>
+                  <button onClick={addGroupHandler}>AddGroup</button>
+                  <button onClick={removeGroupModalHandler}>Cancel</button>
                 </div>
               </form>
             </div>
@@ -125,4 +120,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default GroupModal;

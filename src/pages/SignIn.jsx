@@ -5,12 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { logInWithEmailAndPassword, signInWithGoogle } from "../authentication";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { setUserLoginDetails } from "../store/user";
 
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -22,8 +25,25 @@ const SignIn = () => {
       return;
     }
 
-    if (user) navigate("/home");
+    if (user)
+    {
+      console.log(user);
+      // setUser(user)
+      navigate("/home");
+
+    } 
   },[user, loading]);
+
+  const setUser = (user) => {
+
+    dispatch(
+      setUserLoginDetails({
+        name:user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    )
+  }
 
   const emailPasswordLogin = (event) => {
     event.preventDefault();

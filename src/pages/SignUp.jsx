@@ -6,7 +6,8 @@ import Card from "../Components/UI/Card";
 import classes from "./SignUp.module.css";
 import {auth} from "../firebase";
 import { useDispatch } from "react-redux";
-import { userActions } from "../store/user";
+import {  setUserLoginDetails } from "../store/user";
+// import { userActions } from "../store/user";
 
 const SignUp = () => {
   const nameInputRef = useRef();
@@ -24,8 +25,24 @@ const SignUp = () => {
       return;
     }
 
-    if (user) navigate("/home");
+    if (user){
+      console.log(user);
+      // setUser(user);
+      navigate("/home");
+
+    } 
   },[user, loading]);
+
+  const setUser = (user) => {
+
+    dispatch(
+      setUserLoginDetails({
+        name:user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    )
+  }
 
   const registerHandler = (event) => {
     event.preventDefault();
@@ -35,7 +52,7 @@ const SignUp = () => {
     const enteredPassword = passwordInputRef.current.value;
 
     console.log(enteredEmail, enteredPassword, enteredName);
-    dispatch(userActions.addUserName(enteredName));
+    // dispatch(userActions.addUserName(enteredName));
 
 
     registerWithEmailAndPassword(enteredName, enteredEmail, enteredPassword);

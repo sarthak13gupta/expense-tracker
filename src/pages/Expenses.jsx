@@ -42,7 +42,7 @@ const Expenses = () => {
 
   const expenses = Array.from({ ...expenseList });
   dispatch(expenseActions.addExpense(expenseList));
-  console.log(expenseList);
+  // console.log(expenseList);
 
   return (
     <div className={classes.container}>
@@ -51,7 +51,7 @@ const Expenses = () => {
       {expenseList &&
         expenseList.map((expense) => {
           dispatch(expenseActions.setId(expense.id));
-          console.log(expense);
+          // console.log(expense);
           return (
             
             <Fragment>

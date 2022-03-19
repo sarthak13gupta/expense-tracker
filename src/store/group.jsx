@@ -15,19 +15,7 @@ const groupSlice = createSlice({
     setId(state, action) {
       state.id = action.payload;
     },
-    addGroupFormToggle(state) {
-      state.showForm = !state.showForm;
-    },
-
-    deleteExpense(state) {
-      const expenseDocRef = doc(db, "expenses", state.id);
-
-      try {
-        deleteDoc(expenseDocRef);
-      } catch (err) {
-        alert(err);
-      }
-    },
+    
   },
 });
 
