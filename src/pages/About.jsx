@@ -4,7 +4,6 @@ import Header from "../Components/Header";
 const About = () => {
   return (
     <Fragment>
-      <Header></Header>
       <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
       provident, optio deserunt laboriosam, modi debitis minima necessitatibus,

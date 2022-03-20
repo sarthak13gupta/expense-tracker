@@ -12,7 +12,7 @@ import {
 } from "../store/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addDoc , collection } from "firebase/firestore/lite";
+import { addDoc , collection , query , where , getDocs } from "firebase/firestore/lite";
 import { selectUserName } from "../store/user";
 import db from "../firebase";
 
@@ -22,40 +22,35 @@ const Header = () => {
   const userName = useSelector(selectUserName);
   const navigate = useNavigate();
 
-  console.log(user);
+  // console.log(user);
 
   useEffect( async () =>  {
     if (user) {
       try {
-         await addDoc(collection(db, "users"), {
-            // uid: user.uid,
-            name: user.displayName,
-            // authProvider: "email and Password",
-            email: user.email,
-            // photo: user.photo,
-            // photo: user.photoURL,
-        });
+
+        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const docs = await getDocs(q);
+        if (docs.docs.length === 0) {
+            await addDoc(collection(db, "users"), {
+                uid: user.uid,
+                // name: user.displayName,
+                // authProvider: "google",
+                email: user.email,
+                // photo: user.photoURL,
+            });
+        }
+
+
+
     } catch (err) {
         alert(err.message);
     }
       setUser(user);
     }
     // else navigate("/");
-  },[user]);
+  },[]);
 
   const setUser = (user) => {
-  //   try {
-  //     addDoc(collection(db, "users"), {
-  //         // uid: user.uid,
-  //         name: user.displayName,
-  //         // authProvider: "email and Password",
-  //         email: user.email,
-  //         // photo: user.photo,
-  //         // photo: user.photoURL,
-  //     });
-  // } catch (err) {
-  //     alert(err.message);
-  // }
 
 
     dispatch(

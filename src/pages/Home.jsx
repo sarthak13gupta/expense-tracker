@@ -16,7 +16,7 @@ const Home = (props) => {
 
     return(
         <Fragment>
-            <Header></Header>
+            {/* <Header></Header> */}
             <Modal />
             <GroupModal/>
             <UpdateExpenseModal/>

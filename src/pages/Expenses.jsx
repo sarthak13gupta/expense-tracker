@@ -6,14 +6,17 @@ import {
   getDocs,
   doc
 } from "firebase/firestore/lite";
-import db from "../firebase";
+import db, { auth } from "../firebase";
 import { useEffect } from "react";
 import { expenseActions } from "../store/expenses";
 import classes from "./Expenses.module.css";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 
 const Expenses = () => {
   const dispatch = useDispatch();
+
+  const [user] = useAuthState(auth);
 
   // const userName = useSelector((state) => state.user.userName);
 
@@ -27,18 +30,21 @@ const Expenses = () => {
     getDocs(collectionRef)
       .then((snapshot) => {
         snapshot.docs.map((doc) => {
+          if(doc.data().uid === user.uid){
+            tempArray.push({
+              cost: doc.data().cost,
+              description: doc.data().description,
+              id: doc.id,
+            });
+          }
           //   dispatch(expenseActions.addExpense(doc.data()));
-          tempArray.push({
-            cost: doc.data().cost,
-            description: doc.data().description,
-            id: doc.id,
-          });
+          
         });
         dispatch(expenseActions.setId(doc.id));
         setExpenseList(tempArray);
       })
       .catch((err) => console.log(err.message));
-  }, []);
+  }, [user]);
 
   const expenses = Array.from({ ...expenseList });
   dispatch(expenseActions.addExpense(expenseList));
@@ -49,7 +55,7 @@ const Expenses = () => {
       Individual Expenses
       <div className={classes.content}>
       {expenseList &&
-        expenseList.map((expense) => {
+        expenseList.map((expense , key) => {
           dispatch(expenseActions.setId(expense.id));
           // console.log(expense);
           return (

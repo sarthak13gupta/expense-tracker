@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../store/ui";
 import { expenseActions } from "../../../store/expenses";
 import { collection, doc, addDoc, Timestamp } from "firebase/firestore/lite";
-import db from "../../../firebase";
+import db, { auth } from "../../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 
 const backdrop = {
@@ -17,6 +18,7 @@ const backdrop = {
 const Modal = () => {
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.ui.showModal);
+  const [user] = useAuthState(auth);
 
   const modal = {
     hidden: {
@@ -45,8 +47,11 @@ const Modal = () => {
       dispatch(uiActions.setShowModal());
 
       try {
+
+
         const collectionRef = collection(db, "expenses");
         await addDoc(collectionRef, {
+          uid: user.uid,
           description: enteredDescription,
           cost: enteredCost,
           created: Timestamp.now(),
@@ -54,7 +59,11 @@ const Modal = () => {
       } catch (err) {
         alert(err.message);
       }
-    } else {
+
+
+    } 
+    else 
+    {
       alert("please completely add an expense");
     }
     console.log(enteredCost, enteredDescription);

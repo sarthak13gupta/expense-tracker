@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { upload } from "../../storage";
+import {  uploadUserPhoto } from "../../storage";
 import { selectUserEmail, selectUserName, selectUserPhoto, setUserLoginDetails } from "../../store/user";
 import Header from "../Header";
 
@@ -40,7 +40,7 @@ const Profile = () => {
         e.preventDefault();
         console.log(photo);
         console.log(user);
-        upload(photo , user , setLoading);
+        uploadUserPhoto(photo , user , setLoading);
 
     }
 
@@ -52,7 +52,6 @@ const Profile = () => {
 
     return (
         <div>
-            <Header></Header>
             <div>
                 <input type="file" onChange={fileChangeHandler}/>
                 <button disabled={loading || !photo} onClick={onClickHandler}>Upload</button>

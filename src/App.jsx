@@ -8,11 +8,14 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Reset from "./pages/Reset";
 import Profile from "./Components/Users/Profile";
+import Detail from "./pages/Detail";
+import Header from "./Components/Header";
 
 function App() {
   return (
     <div>
       <Router>
+      <Header/>
       <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="about" element={<About />} />
@@ -22,6 +25,7 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/home/profile" element={<Profile/>}/>
       <Route path="signin/reset" element={<Reset/>}></Route>
+      <Route path="/detail/:id" element={<Detail/>}></Route>
       </Routes>
       </Router>
         

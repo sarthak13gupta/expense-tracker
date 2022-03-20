@@ -1,13 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./Modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../store/ui";
 import { expenseActions } from "../../../store/expenses";
-import { collection, doc, addDoc, Timestamp } from "firebase/firestore/lite";
-import db from "../../../firebase";
-
+import { collection, doc, addDoc, Timestamp , getDocs ,  } from "firebase/firestore/lite";
+import db, { auth } from "../../../firebase";
+import user from "../../../store/user";
+import { useAuthState } from "react-firebase-hooks/auth";
+import GroupPhoto from "../../Groups/GroupItem/GroupPhoto";
+import SearchBar from "../../SearchBar/SearchBar";
 
 const backdrop = {
   visisble: { opacity: 0 },
@@ -17,6 +20,8 @@ const backdrop = {
 const GroupModal = () => {
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.ui.showGroupModal);
+  const [user] = useAuthState(auth);
+  // const [userList , setUserList] = useState();
 
   const modal = {
     hidden: {
@@ -33,6 +38,32 @@ const GroupModal = () => {
   let descriptionInputRef = useRef();
   let memberInputRef = useRef();
 
+  // let tempArray = [];
+
+
+  // useEffect(() => {
+  //   const collectionRef = collection(db, "users");
+
+  //   getDocs(collectionRef)
+  //     .then((snapshot) => {
+  //       snapshot.docs.map((doc) => {
+  //         //   dispatch(groupActions.addExpense(doc.data()));
+  //         if (doc.data().uid !== user.uid) {
+  //           tempArray.push({
+  //             email: doc.data().email,
+  //             id: doc.id,
+  //           });
+  //         }
+  //       });
+  //       // dispatch(groupActions.setId(doc.id));
+  //       setUserList(tempArray);
+  //     })
+  //     .catch((err) => console.log(err.message));
+  // }, [user]);
+
+
+
+
   const addGroupHandler = async (event) => {
     event.preventDefault();
 
@@ -46,7 +77,8 @@ const GroupModal = () => {
 
       try {
         const collectionRef = collection(db, "group");
-        addDoc(collectionRef, {
+        await addDoc(collectionRef, {
+          uid: user.uid,
           description: enteredDescription,
           members: enteredMembers,
           created: Timestamp.now(),
@@ -57,6 +89,7 @@ const GroupModal = () => {
     } else {
       alert("please completely add an expense");
     }
+
     console.log(enteredMembers, enteredDescription);
     descriptionInputRef = "";
     memberInputRef = "";
@@ -66,7 +99,6 @@ const GroupModal = () => {
     dispatch(uiActions.setGroupShowModal());
   };
 
-  
   return (
     // <div className={classes.container}>
     <AnimatePresence exitBeforeEnter>
@@ -97,7 +129,7 @@ const GroupModal = () => {
                   />
                 </div>
                 <div className={classes.control}>
-                  <label htmlFor="cost">Members</label>
+                  <label htmlFor="MemberCount">MemberCount</label>
                   <input
                     type="text"
                     id="description"
@@ -105,6 +137,12 @@ const GroupModal = () => {
                     // required
                   />
                 </div>
+                {/* <div>
+                  <GroupPhoto/>
+                </div> */}
+                {/* <div>
+                  <SearchBar placeholder={"enter a member name"}  data={userList}/>
+                </div> */}
                 <div className={classes.actions}>
                   <button onClick={addGroupHandler}>AddGroup</button>
                   <button onClick={removeGroupModalHandler}>Cancel</button>
