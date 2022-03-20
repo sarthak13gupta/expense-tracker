@@ -49,7 +49,8 @@ const Group = () => {
 
   return (
     <div>
-      Groups
+      <h2>Groups</h2>
+      
       <TopFoldGroup />
       <div className={classes.container}>
         <div className={classes.content}>

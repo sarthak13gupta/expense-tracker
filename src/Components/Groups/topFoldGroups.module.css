@@ -8,8 +8,9 @@
 
 .space {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex: 1;
+    position: relative;
 }
 
 .topfold input {
@@ -18,4 +19,21 @@
     width: 50%;
     background-color: white;
     border-radius: 12px;
+}
+
+.actions {
+    text-align: center;
+    margin: 5px;
+}
+
+.actions button {
+    font-size: 1.25rem;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.actions button:hover {
+    background-color: #cbf8f8;
+    border-color: teal;
+    transform: scale(1.05);
 }

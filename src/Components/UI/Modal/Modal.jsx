@@ -41,10 +41,17 @@ const Modal = () => {
     const enteredDescription = descriptionInputRef.current.value;
     const enteredCost = costInputRef.current.value;
 
+
+    console.log(enteredCost);
+
+    
+
+
     if (enteredCost && enteredDescription) {
       dispatch(expenseActions.addDescription(enteredDescription));
       dispatch(expenseActions.addCost(enteredCost));
       dispatch(uiActions.setShowModal());
+      // dispatch(expenseActions.calcTotalAmount(+enteredCost));
 
       try {
 

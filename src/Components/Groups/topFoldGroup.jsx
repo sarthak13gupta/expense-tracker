@@ -21,16 +21,17 @@ const TopFold = () => {
 
 
     return (
-        <Card>
+        // <Card>
             <div className={classes.topFold}>
                 {/* <i></i> */}
                 <div className={classes.space}>
-                    <input type="text" placeholder="search for group" ref={queryRef} />
+                    {/* <input type="text" placeholder="search for group" ref={queryRef} /> */}
+                    <div className={classes.actions}> 
                     <button onClick={formShowHandler}>AddGroup</button>
+                    </div>
                 </div>
             </div>
-            {/* {showForm &&<NewExpense/>} */}
-        </Card>
+        // </Card>
     )
 
 };

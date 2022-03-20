@@ -52,7 +52,7 @@ const Expenses = () => {
 
   return (
     <div className={classes.container}>
-      Individual Expenses
+      <h2>Individual Expenses</h2>
       <div className={classes.content}>
       {expenseList &&
         expenseList.map((expense , key) => {

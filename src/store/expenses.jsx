@@ -3,6 +3,7 @@ import { doc, deleteDoc , collection , addDoc ,Timestamp  } from "firebase/fires
 import db from "../firebase";
 
 const initialExpenseState = {
+  totalAmount: 0,
   expenseList: [],
   showForm: false,
   updateExpenseFormToggle: false,
@@ -15,6 +16,7 @@ const expenseSlice = createSlice({
   name: "expense",
   initialState: initialExpenseState,
   reducers: {
+
     addExpense(state, action) {
       // console.log(action.payload);
       state.expenseList = state.expenseList.concat(action.payload);
@@ -32,6 +34,10 @@ const expenseSlice = createSlice({
     addCost(state , action){
       state.enteredCost = action.payload;
     },
+
+    calcTotalAmount(state , action){
+      state.totalAmount = state.totalAmount + action.payload;
+    }
   },
 });
 

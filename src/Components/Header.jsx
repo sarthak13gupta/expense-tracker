@@ -48,7 +48,7 @@ const Header = () => {
       setUser(user);
     }
     // else navigate("/");
-  },[]);
+  },[user]);
 
   const setUser = (user) => {
 
@@ -63,6 +63,8 @@ const Header = () => {
   };
 
   const userPhoto = useSelector(selectUserPhoto);
+
+  console.log(userPhoto);
 
   const LogOut = () => {
     setSignOutState();
