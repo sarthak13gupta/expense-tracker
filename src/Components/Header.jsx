@@ -94,13 +94,13 @@ const Header = () => {
           </li> */}
           {user && 
           <li>
-          <Link to="/home/profile">
+          <NavLink to="/home/profile">
             <img
               className={classes.avatar}
               src={userPhoto}
               alt="avatar"
             ></img>
-          </Link>
+          </NavLink>
         </li>}
         </ul>
       </nav>

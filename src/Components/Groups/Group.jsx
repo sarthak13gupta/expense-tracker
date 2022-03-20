@@ -49,13 +49,12 @@ const Group = () => {
 
   return (
     <div>
-      <h2>Groups</h2>
-      
       <TopFoldGroup />
       <div className={classes.container}>
+        <h2>Groups</h2>
         <div className={classes.content}>
           {groupList &&
-            groupList.map((group , key) => {
+            groupList.map((group, key) => {
               dispatch(groupActions.setId(group.id));
               // console.log(group);
               return (

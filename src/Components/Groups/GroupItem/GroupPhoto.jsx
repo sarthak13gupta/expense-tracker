@@ -12,6 +12,9 @@ import db from "../../../firebase";
 
 const GroupPhoto = () => {
 
+  const [show , setShow]  = useState(false);
+
+
     
 
     const [user] = useAuthState(auth);
@@ -20,7 +23,8 @@ const GroupPhoto = () => {
 
     const [photo , setPhoto] = useState(null);
     const [loading , setLoading] = useState();
-    const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/GroupPhoto_avatar_placeholder_large.png");
+    const [photoURL, setPhotoURL] = useState("/images/defaultProfilePicture.png");
+
 
 
     const fileChangeHandler = (e) => {
@@ -31,6 +35,10 @@ const GroupPhoto = () => {
             
         }
     }
+
+    const imageSetHandler = () => {
+      setShow(true);
+  }
 
     const onClickHandler = (e) => {
         e.preventDefault();
@@ -57,12 +65,19 @@ const GroupPhoto = () => {
       
     return (
         
-            <div>
-                <input type="file" onChange={fileChangeHandler}/>
-                <button disabled={loading || !photo} onClick={onClickHandler}>Upload</button>
-                <img className={classes.avatar} src={photoURL} alt="avatar" />
-
-            </div>
+      <div className={classes.container}>
+      <div className={classes.pic}>
+        {show && (
+          <div>
+            <input type="file" onChange={fileChangeHandler} />
+            <button disabled={loading || !photo} onClick={onClickHandler}>
+              Upload
+            </button>
+          </div>
+        )}
+        <img className={classes.avatar} src={photoURL} onClick={imageSetHandler} alt="avatar" />
+      </div>
+      </div>
         
     )
 };

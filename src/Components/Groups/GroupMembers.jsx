@@ -41,7 +41,7 @@ const GroupMembers = (props) => {
 
       return (
         <div className={classes.container}>
-          Members
+          <h2>Members</h2>
           <div className={classes.content}>
           {memberList &&
             memberList.map((member , key) => {

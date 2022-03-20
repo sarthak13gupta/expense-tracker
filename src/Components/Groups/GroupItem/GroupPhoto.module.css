@@ -1,9 +1,28 @@
+.container {
+    margin: 20px;
+}
+
+.pic {
+    position: relative;
+    left: 40%;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.pic img {
+    left: 50%;
+}
+
+.pic img:hover {
+    cursor: pointer;
+}
+
 .avatar {
     right: 0;
     vertical-align: middle;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-width: 1px;
     border-color: gray;
     border-style: outset;
